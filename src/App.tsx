@@ -4,15 +4,19 @@ import Main from "./components/Main";
 import Order from "./components/Order";
 import Complete from "./components/Complete";
 import Error from "./components/Error";
+import GlobalStyle from "./style/GlobalStyle";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Main />} />
-      <Route path="/order" element={<Order />} />
-      <Route path="/complete" element={<Complete />} />
-      <Route path="/error" element={<Error />} />
-    </Routes>
+    <>
+      <GlobalStyle />
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/order" element={<Order />} />
+        <Route path="/complete" element={<Complete />} />
+        <Route path="/error" element={<Error />} />
+      </Routes>
+    </>
   );
 }
 
