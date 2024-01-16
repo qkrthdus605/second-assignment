@@ -1,0 +1,19 @@
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import Main from "./components/Main";
+import Order from "./components/Order";
+import Complete from "./components/Complete";
+import Error from "./components/Error";
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Main />} />
+      <Route path="/order" element={<Order />} />
+      <Route path="/complete" element={<Complete />} />
+      <Route path="/error" element={<Error />} />
+    </Routes>
+  );
+}
+
+export default App;
