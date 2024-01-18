@@ -25,11 +25,14 @@ const OrderDiv = styled.div`
   position: fixed;
   bottom: 0;
   padding: 28px 22px;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   border: none;
   border-radius: 20px 20px 0 0;
+  background-color: white;
   box-shadow: 0px -4px 10px 0px rgba(0, 0, 0, 0.25);
 `;
 

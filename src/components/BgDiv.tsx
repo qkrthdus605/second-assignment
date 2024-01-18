@@ -12,7 +12,7 @@ const BgDiv = ({ bgColor = "white", children }: BgDivProps) => {
 const Div = styled.div<{ bgColor?: string }>`
   background-color: ${(props) => props.bgColor};
   width: 350px;
-  height: 100vh;
+  height: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
