@@ -1,20 +1,33 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
 import styled from "styled-components";
 
 const OrderTab = () => {
   const navigate = useNavigate();
+  const [totalCnt] = useState<number>(0);
+  const { isLoading: productListLoading } = useQuery("product");
 
   const onClickOrder = () => {
-    navigate("/error");
+    try {
+      if (totalCnt === 0) {
+        throw new Error("주문 수량이 0입니다");
+      }
+      navigate("/complete");
+    } catch (error) {
+      navigate("/error");
+    }
   };
 
   return (
     <OrderDiv>
       <OrderContent>
-        <Total>총 수량 : 0개</Total>
+        <Total>총 수량 : {totalCnt}개</Total>
         <Total>총 금액 : 0원</Total>
       </OrderContent>
-      <OrderBtn onClick={onClickOrder}>주문하기</OrderBtn>
+      <OrderBtn onClick={onClickOrder} disabled={productListLoading}>
+        주문하기
+      </OrderBtn>
     </OrderDiv>
   );
 };
@@ -36,19 +49,20 @@ const OrderDiv = styled.div`
   box-shadow: 0px -4px 10px 0px rgba(0, 0, 0, 0.25);
 `;
 
-const OrderBtn = styled.button`
+const OrderBtn = styled.button<{ disabled?: boolean }>`
   width: 300px;
   height: 48px;
-  background-color: black;
+  background-color: ${(props) =>
+    props.disabled ? "rgba(193, 193, 193, 1)" : "black"};
   border: none;
 
   text-align: center;
-  color: white;
+  color: ${(props) => (props.disabled ? "black" : "white")};
   font-size: 18px;
   font-weight: 400;
 
   &:hover {
-    cursor: pointer;
+    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   }
 `;
 

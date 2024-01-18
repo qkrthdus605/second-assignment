@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
 import axios from "axios";
 import Card from "./Card";
@@ -11,27 +11,27 @@ interface Product {
   price: number;
 }
 
+const fetchData = async () => {
+  const apiUrl = "http://localhost:3001/items";
+  const response = await axios.get(apiUrl);
+  return response.data;
+};
+
 const ProductList = () => {
-  const [items, setItems] = useState<Product[]>([]);
+  const { data: items, isLoading } = useQuery<Product[]>("product", fetchData);
 
-  useEffect(() => {
-    const apiUrl = "http://localhost:3001/items";
-
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(apiUrl);
-        setItems(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  if (isLoading) {
+    return (
+      <LoadingText>
+        목록을
+        <br /> 불러오고 있습니다
+      </LoadingText>
+    );
+  }
 
   return (
     <ListContainer>
-      {items.map((item) => (
+      {items?.map((item) => (
         <Card key={item.id} data={item} />
       ))}
     </ListContainer>
@@ -39,7 +39,12 @@ const ProductList = () => {
 };
 
 const ListContainer = styled.div`
-  margin-top: 70px;
+  margin: 70px 0 170px 0;
+`;
+
+const LoadingText = styled.div`
+  text-align: center;
+  line-height: 22px;
 `;
 
 export default ProductList;
