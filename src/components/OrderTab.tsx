@@ -1,11 +1,12 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import styled from "styled-components";
+import { useOrderContext } from "../context/OrderContext";
 
 const OrderTab = () => {
   const navigate = useNavigate();
-  const [totalCnt] = useState<number>(0);
+  const { totalCnt, totalPrice, resetOrder } = useOrderContext();
+  // 상품 리스트 로딩중 여부
   const { isLoading: productListLoading } = useQuery("product");
 
   const onClickOrder = () => {
@@ -13,6 +14,8 @@ const OrderTab = () => {
       if (totalCnt === 0) {
         throw new Error("주문 수량이 0입니다");
       }
+      // 주문 완료 후 초기화
+      resetOrder();
       navigate("/complete");
     } catch (error) {
       navigate("/error");
@@ -23,7 +26,7 @@ const OrderTab = () => {
     <OrderDiv>
       <OrderContent>
         <Total>총 수량 : {totalCnt}개</Total>
-        <Total>총 금액 : 0원</Total>
+        <Total>총 금액 : {totalPrice}원</Total>
       </OrderContent>
       <OrderBtn onClick={onClickOrder} disabled={productListLoading}>
         주문하기

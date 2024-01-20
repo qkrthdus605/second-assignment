@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useOrderContext } from "../context/OrderContext";
 
 interface CardProps {
   data: {
@@ -11,15 +12,20 @@ interface CardProps {
   };
 }
 
-const Card = ({ data }: CardProps) => {
+const Card: React.FC<CardProps> = ({ data }) => {
+  const { setTotalCnt, setTotalPrice } = useOrderContext();
   const [meterialCnt, setMeterialCnt] = useState<number>(0);
 
   const handleDec = () => {
     setMeterialCnt((prevValue) => Math.max(prevValue - 1, 0));
+    setTotalCnt((prevTotalCnt) => Math.max(prevTotalCnt - 1, 0));
+    setTotalPrice((prevTotalPrice) => Math.max(prevTotalPrice - data.price, 0));
   };
 
   const handleInc = () => {
     setMeterialCnt((prevValue) => Math.min(prevValue + 1, 999));
+    setTotalCnt((prevTotalCnt) => prevTotalCnt + 1);
+    setTotalPrice((prevTotalPrice) => prevTotalPrice + data.price);
   };
 
   return (

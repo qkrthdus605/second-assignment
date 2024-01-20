@@ -20,6 +20,7 @@ const fetchData = async () => {
 const ProductList = () => {
   const { data: items, isLoading } = useQuery<Product[]>("product", fetchData);
 
+  // 로딩중일 경우 보여줄 텍스트
   if (isLoading) {
     return (
       <LoadingText>
