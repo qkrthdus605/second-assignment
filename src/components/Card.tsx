@@ -16,12 +16,14 @@ const Card: React.FC<CardProps> = ({ data }) => {
   const { setTotalCnt, setTotalPrice } = useOrderContext();
   const [meterialCnt, setMeterialCnt] = useState<number>(0);
 
+  // 감소
   const handleDec = () => {
     setMeterialCnt((prevValue) => Math.max(prevValue - 1, 0));
     setTotalCnt((prevTotalCnt) => Math.max(prevTotalCnt - 1, 0));
     setTotalPrice((prevTotalPrice) => Math.max(prevTotalPrice - data.price, 0));
   };
 
+  // 증가
   const handleInc = () => {
     setMeterialCnt((prevValue) => Math.min(prevValue + 1, 999));
     setTotalCnt((prevTotalCnt) => prevTotalCnt + 1);
